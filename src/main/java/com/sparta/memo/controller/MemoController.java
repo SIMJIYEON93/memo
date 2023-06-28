@@ -26,8 +26,8 @@ public class MemoController {
 
     private MemoService memoService;
 
-    public MemoController(JdbcTemplate jdbcTemplate) {
-        this.memoService = new MemoService(jdbcTemplate);
+    public MemoController(MemoService memoService) {
+        this.memoService = memoService;
     }
 
     @PostMapping("/memos") // 메모생성하기 API
