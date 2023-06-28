@@ -14,4 +14,10 @@ public class MemoResponseDto { //memo entityclass와 비슷해
         this.username = memo.getUsername();
         this.contents = memo.getContents();
     }
+
+    public MemoResponseDto(Long id, String username, String contents) {
+        this.id =id;
+        this.username=username;
+        this.contents =contents;
+    }
 }
