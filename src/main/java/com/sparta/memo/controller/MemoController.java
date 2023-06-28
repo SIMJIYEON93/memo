@@ -36,7 +36,7 @@ public class MemoController {
        //RequestDto(data)를 entity(memo)로 바꾸는 코드
         //MemoService에서도 jdbc   template를 생성자로 받고 있어서
 
-        return memoService.CreateMemo(requestDto);
+        return memoService.createMemo(requestDto);
     }
 
         @GetMapping("/memos")

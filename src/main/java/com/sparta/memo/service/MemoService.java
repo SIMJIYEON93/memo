@@ -45,14 +45,17 @@ public class MemoService { //memoService 로 bean 등록됨
     }
 
 
-    public MemoResponseDto CreateMemo(MemoRequestDto requestDto) {
+    public MemoResponseDto createMemo(MemoRequestDto requestDto) {
 
         Memo memo = new Memo(requestDto);
 
         Memo saveMemo = memoRepository.save(memo);
-
+        // saveMemo = memoRepository.
         // Entity -> ResponseDto
-        MemoResponseDto memoResponseDto = new MemoResponseDto(saveMemo); //saveMemo, memo 동일 결과값
+        MemoResponseDto memoResponseDto = new MemoResponseDto(saveMemo);
+        //saveMemo, memo 동일 결과값 -> MemoRespository에서 save매소드에
+        //setId가 있어서 50번째줄 memo객체에도 자동으로 id값이 반환되
+        //따라서 savaMemo와 memo는 같은 기능을 구현함.
 
         return memoResponseDto;
         //requestDto로 data받아오고, responseDto로 응답해줘
