@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,31 +64,28 @@ public class MemoService { //memoService 로 bean 등록됨
 
 
     public List<MemoResponseDto> getMemos() {
-        return memoRepository.findAll();
+        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
     }
 
-
-    public Long updateMemo(Long id, MemoRequestDto requestDto) {
-        Memo memo = memoRepository.findById(id);
-        if(memo != null) {
-            memoRepository.update(id, requestDto);
+    @Transactional
+    public Long updateMemo(Long id, MemoRequestDto requestDto) { //optional 타입이여서 null 체크
+        Memo memo  = findMemo(id);
+            memo.update(requestDto);
             return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
+
     }
 
 
     public Long deleteMemo(Long id) {
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = memoRepository.findById(id);
-        if(memo != null) {
-            memoRepository.delete(id);
+        Memo memo = findMemo(id);
+            memoRepository.delete(memo);
             return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
     }
 
-
+    private Memo findMemo(Long id){
+        return memoRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
+        );
+    }
 }
