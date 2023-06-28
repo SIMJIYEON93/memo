@@ -64,7 +64,7 @@ public class MemoService { //memoService 로 bean 등록됨
 
 
     public List<MemoResponseDto> getMemos() {
-        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
+        return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
 
     @Transactional
